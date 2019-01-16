@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <button class="btn btn-primary pull-right" (click)="openModalAdd(add)">Add</button>
+      <br>
+      <br>
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr class="table-primary">
+            <td>NOME</td>
+            <td>DESCRIÇÃO DETALADA</td>
+            <td>PREÇO</td>
+            <td>AÇÃO</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let servico of servicos">
+            <td>{{ servico.nome }}</td>
+            <td>{{ servico.descricao }}</td>
+            <td>{{ servico.preco }}</td>
+            <td>
+              <button class="btn btn-warning" (click)="openModalEdit(edit, servico)">Edit</button> | 
+              <button class="btn btn-danger" (click)="openModalDelete(delete, servico._id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #add>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Add</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <label for="nome">Nome</label>
+      <input type="text" class="form-control" name="nome" [(ngModel)]="servico.nome">
+      <p class="text-danger">{{ errorMsg.nome }}</p>
+      
+      <label for="descricao">Descrião detalada</label>
+      <input type="text" class="form-control" name="descricao" [(ngModel)]="servico.descricao">
+      <p class="text-danger">{{ errorMsg.descricao }}</p>
+
+      <label for="preco">Preco</label>
+      <input type="text" class="form-control" name="preco" [(ngModel)]="servico.preco">
+      <p class="text-danger">{{ errorMsg.preco }}</p>
+
+      <button class="btn btn-primary" (click)="onSave()">Save</button>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #edit>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Edit</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <label for="nome">Nome</label>
+      <input type="text" class="form-control" name="nome" [(ngModel)]="editServico.nome">
+      <p class="text-danger">{{ errorMsg.nome }}</p>
+      
+      <label for="descricao">Descrião detalada</label>
+      <input type="text" class="form-control" name="descricao" [(ngModel)]="editServico.descricao">
+      <p class="text-danger">{{ errorMsg.descricao }}</p>
+
+      <label for="preco">Preco</label>
+      <input type="text" class="form-control" name="preco" [(ngModel)]="editServico.preco">
+      <p class="text-danger">{{ errorMsg.preco }}</p>
+
+      <button class="btn btn-primary" (click)="onUpdate()">Update</button>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #delete>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Confirm</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to delete this servico?</p>
+    <button class="btn btn-primary" (click)="modalRef.hide()">NO</button> | 
+    <button class="btn btn-danger" (click)="deleteServico()">YES</button>
+  </div>
+</ng-template>
